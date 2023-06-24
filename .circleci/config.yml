@@ -126,12 +126,12 @@ jobs:
           keys: [scan-frontend]
       # Your job code here
       - run:
-        name: Scan Frontend
-        command: |
-          cd frontend
-          npm install
-          ## npm install oauth-sign@^0.9.0
-          npm audit --audit-level=critical
+          name: Scan Frontend
+          command: |
+            cd frontend
+            npm install
+            ## npm install oauth-sign@^0.9.0
+            npm audit --audit-level=critical
       - save_cache:
           paths: [frontend/scan]
           key: frontend-scan
