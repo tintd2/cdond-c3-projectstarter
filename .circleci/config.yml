@@ -122,8 +122,8 @@ jobs:
       # Checkout code from git
       - checkout
       # Restore from cache
-      - restore_cache:
-          keys: [scan-frontend]
+      # - restore_cache:
+      #     keys: [scan-frontend]
       # Your job code here
       - run:
           name: Scan Frontend
@@ -146,8 +146,8 @@ jobs:
       # Checkout code from git
       - checkout
       # Restore from cache
-      - restore_cache:
-          keys: [scan-backend]
+      # - restore_cache:
+      #     keys: [scan-backend]
       # Your job code here
       - run:
           name: Scan Backend
