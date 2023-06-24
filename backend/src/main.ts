@@ -10,7 +10,7 @@ import { TransformInterceptor } from './modules/common/interceptors/TransformInt
 import * as express from 'express';
 import { ErrorFilter } from './modules/errors/error.filter';
 
-async function bootstrap() {
+async function bootstrap() { build false
   const logger = new AppLogger();
   logger.info(`NodeJs Version ${process.version}`);
   logger.info(JSON.stringify(process.env));
