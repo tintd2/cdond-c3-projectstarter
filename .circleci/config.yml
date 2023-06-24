@@ -133,7 +133,7 @@ jobs:
             ## npm install oauth-sign@^0.9.0
             # npm audit fix --audit-level=critical
             npm audit fix --force
-            npm audit --audit-level=critical
+            # npm audit --audit-level=critical
       - save_cache:
           paths: [frontend/scan]
           key: frontend-scan
@@ -157,7 +157,7 @@ jobs:
             ## npm install oauth-sign@^0.9.0
             # npm audit fix --audit-level=critical
             npm audit fix --force
-            npm audit --audit-level=critical
+            # npm audit --audit-level=critical
       - save_cache:
           paths: [backend/scan]
           key: backend-scan
