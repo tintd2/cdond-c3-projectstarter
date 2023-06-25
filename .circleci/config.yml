@@ -38,38 +38,19 @@ commands:
             
 jobs:
   
-  deploy:
+  send-slack-msg:
     executor:
       name: node/default
-    # docker:
-    #   - image: alpine:3.14
     steps:
       - checkout
       - run:
           name: "Notifications"
           command: |
-            echo $SLACK_ACCESS_TOKEN
-            echo $SLACK_DEFAULT_CHANEL
             npm run deploy
       - slack/notify:
           channel: $SLACK_DEFAULT_CHANEL
           event: fail
           template: basic_fail_1
-          # custom: |
-          #   {
-          #     "blocks": [
-          #       {
-          #         "type": "section",
-          #         "fields": [
-          #           {
-          #             "type": "plain_text",
-          #             "text": "*This is a text notification*",
-          #             "emoji": true
-          #           }
-          #         ]
-          #       }
-          #     ]
-          #   }
   
   build-frontend:
     docker:
@@ -381,11 +362,11 @@ workflows:
 
       - deploy:
           context:
-            - UdaContext
+            - slack-secret
 
-      - build-frontend:
-          context:
-            - UdaContext
+      - build-frontend
+          # context:
+          #   - ck-secret
       # - build-backend
       # - test-frontend:
       #     requires: [build-frontend]
