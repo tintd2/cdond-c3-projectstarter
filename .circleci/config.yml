@@ -380,11 +380,11 @@ workflows:
     jobs:
 
       - deploy:
-          context: 
+          context:
             - UdaContext
 
-      - build-frontend
-          context: 
+      - build-frontend:
+          context:
             - UdaContext
       # - build-backend
       # - test-frontend:
