@@ -289,7 +289,7 @@ jobs:
             # Your code here
             apk add --update tar 
             apk add --update gzip
-            apk add --update aws-cli
+            # apk add --update aws-cli
             apk add --update ansible 
             # exit 1
       - run:
