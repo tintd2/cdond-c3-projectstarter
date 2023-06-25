@@ -150,8 +150,8 @@ jobs:
       # Checkout code from git
       - checkout
       # Restore from cache
-      # - restore_cache:
-      #     keys: [scan-backend]
+      - restore_cache:
+          keys: [scan-backend]
       # Your job code here
       - run:
           name: Scan Backend
@@ -342,8 +342,8 @@ workflows:
       #     requires: [build-frontend]
       # - test-backend:
       #     requires: [build-backend]
-      # - scan-backend:
-      #     requires: [build-backend]
+      - scan-backend:
+          requires: [build-backend]
       # - scan-frontend:
       #     requires: [build-frontend]
       # - deploy-infrastructure:
