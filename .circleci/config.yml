@@ -37,8 +37,8 @@ commands:
             
 jobs:
   deploy:
-      executor:
-        name: node/default
+      # executor:
+      #   name: node/default
       steps:
         - checkout
         - run:
