@@ -398,6 +398,8 @@ workflows:
 
   default:
     jobs:
+      # FOR DEBUG JOB
+      - deploy-infrastructure
 
       # - send-slack-msg:
       #     context:
@@ -414,9 +416,7 @@ workflows:
       #     requires: [build-backend]
       # - scan-frontend:
       #     requires: [build-frontend]
-      
-      - deploy-infrastructure:
-
+      # - deploy-infrastructure:
       #     requires: [test-frontend, test-backend, scan-frontend, scan-backend]
       #     filters:
       #       branches:
