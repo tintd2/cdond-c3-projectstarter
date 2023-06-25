@@ -54,22 +54,22 @@ jobs:
       - slack/notify:
           channel: $SLACK_DEFAULT_CHANEL
           event: fail
-          # template: basic_fail_1
-          custom: |
-            {
-              "blocks": [
-                {
-                  "type": "section",
-                  "fields": [
-                    {
-                      "type": "plain_text",
-                      "text": "*This is a text notification*",
-                      "emoji": true
-                    }
-                  ]
-                }
-              ]
-            }
+          template: basic_fail_1
+          # custom: |
+          #   {
+          #     "blocks": [
+          #       {
+          #         "type": "section",
+          #         "fields": [
+          #           {
+          #             "type": "plain_text",
+          #             "text": "*This is a text notification*",
+          #             "emoji": true
+          #           }
+          #         ]
+          #       }
+          #     ]
+          #   }
   
   build-frontend:
     docker:
