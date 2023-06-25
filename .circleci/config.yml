@@ -348,13 +348,12 @@ cleanup:
             fi
             
 workflows:
-  deploy_and_notify:
+
+  default:
     jobs:
       - deploy:
           context: udaContext
-  
-  default:
-    jobs:
+      
       - build-frontend
       - build-backend
       - test-frontend:
