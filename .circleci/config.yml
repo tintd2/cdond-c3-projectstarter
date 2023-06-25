@@ -37,16 +37,16 @@ commands:
             
 jobs:
   deploy:
-      # executor:
-      #   name: node/default
-      steps:
-        - checkout
-        - run:
-            command: npm run deploy
-        - slack/notify:
-            channel: ${SLACK_DEFAULT_CHANEL}
-            event: fail
-            template: basic_fail_1
+    # executor:
+    #   name: node/default
+    steps:
+      - checkout
+      - run:
+          command: npm run deploy
+      - slack/notify:
+          channel: ${SLACK_DEFAULT_CHANEL}
+          event: fail
+          template: basic_fail_1
   
   build-frontend:
     docker:
