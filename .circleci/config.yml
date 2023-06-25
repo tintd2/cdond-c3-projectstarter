@@ -352,7 +352,7 @@ workflows:
   default:
     jobs:
       - deploy:
-          context: udaContext
+        context: udaContext
       
       - build-frontend
       - build-backend
