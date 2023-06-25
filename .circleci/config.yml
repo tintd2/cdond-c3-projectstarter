@@ -3,7 +3,7 @@ version: 2.1
 
 orbs:
   aws-cli: circleci/aws-cli@2.0.3
-  # slack: circleci/slack@4.1
+  slack: circleci/slack@4.1
   node: circleci/node@5.1.0
 
 commands:
@@ -304,8 +304,8 @@ jobs:
   run-migrations:
     docker:
       # Docker image here that supports NodeJS
-      # - image: circleci/node:13.8.0
-      - image: node:alpine
+      - image: circleci/node:13.8.0
+      # - image: node:alpine
     steps:
       # Checkout code from git
       - checkout
