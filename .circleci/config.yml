@@ -317,8 +317,9 @@ jobs:
             npm install
             ## Run and save the migration output
             npm run migrations > migrations_dump.txt
-            # tail migrations_dump.txt
-            echo "hello world"
+            echo "hello world START"
+            cat migrations_dump.txt
+            echo "hello world END"
 
       # - run:
       #     name: Send migration results to memstash
