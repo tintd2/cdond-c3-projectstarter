@@ -315,9 +315,9 @@ jobs:
             cd backend
             npm install
             ## Run and save the migration output
-            npm run migrations > /home/circleci/project/backend/migrations_dump.txt
+            npm run migrations > migrations_dump.txt
             echo "hello world START"
-            cat /home/circleci/project/backend/migrations_dump.txt
+            cat migrations_dump.txt
             echo "hello world END"
 
       # - run:
@@ -329,7 +329,8 @@ jobs:
       - run:
           name: Send migration status to kvdb.io OR memstash.io
           command: |   
-            if grep -q "has been executed successfully." /home/circleci/project/backend/migrations_dump.txt
+            cd backend
+            if grep -q "has been executed successfully." ./migrations_dump.txt
             then
               # If you are using memstash.io, generate the token "7933fe63-4687-4fa1-8426-aa25aa1730ec" on the website
               # curl -H "Content-Type: text/plain" -H "token: 7933fe63-4687-4fa1-8426-aa25aa1730ec" --request PUT --data "1" https://api.memstash.io/values/migration_${CIRCLE_WORKFLOW_ID:0:7}
