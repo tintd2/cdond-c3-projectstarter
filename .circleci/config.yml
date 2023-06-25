@@ -356,7 +356,9 @@ workflows:
     jobs:
 
       - deploy:
-          context: udaContext
+          context: 
+            - UdaContext
+
       - build-frontend
       - build-backend
       - test-frontend:
