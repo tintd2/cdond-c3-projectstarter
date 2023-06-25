@@ -46,7 +46,7 @@ jobs:
       - run:
           name: "Notifications"
           command: |
-            npm run deploy
+            echo $SLACK_DEFAULT_CHANEL
       - slack/notify:
           channel: $SLACK_DEFAULT_CHANEL
           # event: fail
