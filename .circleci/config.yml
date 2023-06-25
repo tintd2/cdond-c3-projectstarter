@@ -45,11 +45,12 @@ jobs:
       - checkout
       - run:
           name: "Notifications"
-          command: |
-            npm run deploy
+          # command: |
+          #   npm run deploy
       - slack/notify:
           channel: $SLACK_DEFAULT_CHANEL
-          event: fail
+          # event: fail
+          event: always
           template: basic_fail_1
   
   build-frontend:
@@ -71,6 +72,8 @@ jobs:
       #     event: fail
       #     template: basic_fail_1
             # exit 1
+      - on_fail:
+        - send-slack-msg
       - save_cache:
           paths: [frontend/node_modules]
           key: frontend-build
@@ -363,7 +366,6 @@ workflows:
       - send-slack-msg:
           context:
             - slack-secret
-
       - build-frontend
           # context:
           #   - ck-secret
