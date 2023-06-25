@@ -259,6 +259,7 @@ jobs:
             # exit 1
             # Write the public IP to the Ansible inventory file
             echo "backend ansible_host=${PUBLIC_IP}" >> .circleci/ansible/inventory.txt
+            cat .circleci/ansible/inventory.txt
 
       - persist_to_workspace:
           root: ~/
