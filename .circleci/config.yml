@@ -85,6 +85,10 @@ jobs:
             cd frontend
             npm install
             npm run build
+      - slack/notify:
+          channel: $SLACK_DEFAULT_CHANEL
+          event: fail
+          template: basic_fail_1
             # exit 1
       - save_cache:
           paths: [frontend/node_modules]
@@ -379,7 +383,9 @@ workflows:
           context: 
             - UdaContext
 
-      # - build-frontend
+      - build-frontend
+          context: 
+            - UdaContext
       # - build-backend
       # - test-frontend:
       #     requires: [build-frontend]
