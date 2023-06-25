@@ -42,7 +42,6 @@ jobs:
     executor:
       name: node/default
     steps:
-      - checkout
       - run:
           name: "Notifications"
           command: |
