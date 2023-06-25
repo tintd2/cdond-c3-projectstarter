@@ -4,7 +4,7 @@ import App from './containers/App';
 import { hot } from 'react-hot-loader';
 import './style.local.css';
 
-export interface Props {}a
+export interface Props {}
 
 export interface State {
   showLoader: boolean;
