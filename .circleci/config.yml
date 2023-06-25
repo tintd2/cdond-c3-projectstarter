@@ -2,6 +2,7 @@ version: 2.1
 
 orbs:
   slack: circleci/slack@4.1
+  node: circleci/node@5.1.0
 
 commands:
   destroy-environment:
@@ -38,10 +39,10 @@ commands:
 jobs:
   
   deploy:
-    # executor:
-    #   name: node/default
-    docker:
-      - image: alpine:3.14
+    executor:
+      name: node/default
+    # docker:
+    #   - image: alpine:3.14
     steps:
       - checkout
       - run:
