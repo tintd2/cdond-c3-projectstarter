@@ -41,7 +41,7 @@ jobs:
     # executor:
     #   name: node/default
     docker:
-      - image: circleci/node:13.8.0
+      - image: alpine:3.14
     steps:
       - checkout
       - run:
