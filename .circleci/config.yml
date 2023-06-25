@@ -36,9 +36,12 @@ commands:
             fi
             
 jobs:
+  
   deploy:
     # executor:
     #   name: node/default
+    docker:
+      - image: circleci/node:13.8.0
     steps:
       - checkout
       - run:
@@ -351,9 +354,9 @@ workflows:
 
   default:
     jobs:
+
       - deploy:
-        context: udaContext
-      
+          context: udaContext
       - build-frontend
       - build-backend
       - test-frontend:
