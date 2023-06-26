@@ -273,8 +273,8 @@ jobs:
   configure-infrastructure:
     docker:
       # Docker image here that supports Ansible
-      #- image: python:3.7-alpine3.11
-      - image: python:3.8-alpine
+      - image: python:3.7-alpine3.11
+      #- image: python:3.8-alpine
     steps:
       # Checkout code from git
       - checkout
@@ -291,24 +291,29 @@ jobs:
             apk add --update tar 
             apk add --update gzip
             # apk add --update aws-cli
-            apk add --no-cache \
-              curl \
-              make \
-              cmake \
-              gcc \
-              g++ \
-              libc-dev \
-              libffi-dev \
-              openssl-dev 
-            curl https://awscli.amazonaws.com/awscli-2.10.1.tar.gz | tar -xz 
-            cd awscli-2.10.1
-            ./configure --prefix=/opt/aws-cli/ --with-download-deps 
-            make
-            make install
-            ls awscli
-            apk --no-cache add groff
-            cp -r builder/* /opt/aws-cli/
-            aws help
+            #apk add --no-cache \
+            #  curl \
+            #  make \
+            #  cmake \
+            #  gcc \
+            #  g++ \
+            #  libc-dev \
+            #  libffi-dev \
+            #  openssl-dev 
+            #curl https://awscli.amazonaws.com/awscli-2.10.1.tar.gz | tar -xz 
+            #cd awscli-2.10.1
+            #./configure --prefix=/opt/aws-cli/ --with-download-deps 
+            #make
+            #make install
+            #ls awscli
+            #apk --no-cache add groff
+            #cp -r builder/* /opt/aws-cli/
+            curl "https://s3.amazonaws.com/aws-cli/awscli-bundle.zip" -o "awscli-bundle.zip"
+            curl "https://s3.amazonaws.com/aws-cli/awscli-bundle-1.16.312.zip" -o "awscli-bundle.zip"
+            unzip awscli-bundle.zip
+            sudo ./awscli-bundle/install -i /usr/local/aws -b /usr/local/bin/aws
+            sudo /usr/local/bin/python3.7 awscli-bundle/install -i /usr/local/aws -b /usr/local/bin/aws
+            aws --version
             apk add --update ansible
             cd ..
             # exit 1
