@@ -378,8 +378,8 @@ jobs:
           name: Install dependencies 
           command: |
             # your code here
-            yum -y install epel-release
-            yum -y update
+            # yum -y install epel-release
+            # yum -y update
             yum install gcc openssl-devel bzip2-devel libffi-devel gzip make -y 
       - run:
           name: Install dependencies Python
