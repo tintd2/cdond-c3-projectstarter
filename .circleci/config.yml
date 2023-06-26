@@ -261,13 +261,14 @@ jobs:
             # echo "backend ansible_host=${PUBLIC_IP}" >> .circleci/ansible/inventory.txt
             echo "${PUBLIC_IP}" >> .circleci/ansible/inventory.txt
             cat .circleci/ansible/inventory.txt
+            pwd
 
       - persist_to_workspace:
           root: ~/
           #root: workspace
           paths:
             # - project/.circleci/ansible/inventory.txt
-            - project/.circleci
+            - project/.circleci/*
             
       # Here's where you will add some code to rollback on failure      
       - destroy-environment
@@ -290,6 +291,8 @@ jobs:
       - run:
           name: Install dependencies
           command: |
+            pwd
+            cat /tmp/project/.circleci/ansible/inventory.txt
             # Your code here
             apk add --update tar 
             apk add --update gzip
