@@ -267,8 +267,8 @@ jobs:
           root: ~/
           #root: workspace
           paths:
-            # - project/.circleci/ansible/inventory.txt
-            - project/.circleci/*
+            - project/.circleci/ansible/inventory.txt
+            # - project/.circleci/*
             
       # Here's where you will add some code to rollback on failure      
       - destroy-environment
@@ -287,7 +287,8 @@ jobs:
       # attach workspace
       - attach_workspace:
           #at: .
-          at: /tmp/project/.circleci
+          # at: /tmp/project/.circleci
+          at: ~/
       - run:
           name: Install dependencies
           command: |
