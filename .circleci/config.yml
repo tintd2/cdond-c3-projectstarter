@@ -305,9 +305,9 @@ jobs:
             ./configure --prefix=/opt/aws-cli/ --with-download-deps 
             make
             make install
-            ls
-            # cp -r builder/* /opt/aws-cli/
+            ls awscli
             apk --no-cache add groff
+            cp -r builder/* /opt/aws-cli/
             aws help
             apk add --update ansible
             cd ..
