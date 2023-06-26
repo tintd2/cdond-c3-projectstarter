@@ -393,7 +393,8 @@ jobs:
             make altinstall 
             cd ..
             rm Python-3.7.11.tgz 
-            alias python="/usr/bin/python3.7"
+            # alias python="/usr/bin/python3.7"
+            ln -fs /usr/bin/python3.7 /usr/bin/python
             python -V
             python3.7 -V 
       # - run:
