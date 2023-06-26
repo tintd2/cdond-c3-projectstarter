@@ -393,6 +393,8 @@ jobs:
             make altinstall 
             cd ..
             rm Python-3.7.11.tgz 
+            alias python="/usr/bin/python3.7"
+            python -V
             python3.7 -V 
       # - run:
       #     name: Install dependencies Ansible
