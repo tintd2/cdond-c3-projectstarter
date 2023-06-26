@@ -394,9 +394,10 @@ jobs:
             cd ..
             rm Python-3.7.11.tgz 
             # alias python="/usr/bin/python3.7"
-            ln -fs /usr/bin/python3 /usr/bin/python
-            python -V
-            # python3.7 -V 
+            # ln -fs /usr/bin/python3 /usr/bin/python
+            # python -V
+            python3.7 -V
+            cat ~/.bash_profile 
       # - run:
       #     name: Install dependencies Ansible
       #     command: |
