@@ -297,12 +297,12 @@ jobs:
               g++ \
               libc-dev \
               libffi-dev \
-              openssl-dev \
-              && curl https://awscli.amazonaws.com/awscli-2.10.1.tar.gz | tar -xz \
-              && cd awscli-2.10.1 \
-              && ./configure --prefix=/opt/aws-cli/ --with-download-deps \
-              && make \
-              && make install
+              openssl-dev 
+            curl https://awscli.amazonaws.com/awscli-2.10.1.tar.gz | tar -xz \
+            cd awscli-2.10.1 \
+            ./configure --prefix=/opt/aws-cli/ --with-download-deps \
+            make \
+            make install
             apk --no-cache add groff
             cp -r /opt/aws-cli/ /opt/aws-cli/
             apk add --update ansible 
