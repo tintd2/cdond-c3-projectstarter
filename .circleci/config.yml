@@ -391,6 +391,7 @@ jobs:
             cd Python-3.7.11 
             ./configure --enable-optimizations 
             make altinstall 
+            cd ..
             rm Python-3.7.11.tgz 
             python3.7 -V 
       # - run:
