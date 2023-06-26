@@ -298,14 +298,15 @@ jobs:
             apk add --update tar 
             apk add --update gzip
             apk add curl
-            apk add openssl-dev
+            # apk add openssl-dev
             # curl "https://s3.amazonaws.com/aws-cli/awscli-bundle.zip" -o "awscli-bundle.zip"
             curl "https://s3.amazonaws.com/aws-cli/awscli-bundle-1.16.312.zip" -o "awscli-bundle.zip"
             unzip awscli-bundle.zip
             ./awscli-bundle/install -i /usr/local/aws -b /usr/local/bin/aws
             /usr/local/bin/python3.7 awscli-bundle/install -i /usr/local/aws -b /usr/local/bin/aws
             aws --version
-            apk add --update ansible
+            apk add --update ansible openssh
+            ssh -o StrictHostKeyChecking=no ubuntu@18.206.205.197
             # cd ..
             # exit 1
       - run:
