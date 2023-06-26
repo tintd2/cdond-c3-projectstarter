@@ -375,15 +375,15 @@ jobs:
       - checkout
       # Python, Ansible, Node, NPM, and AWS CLI
       - run:
-          name: Install dependencies Python
+          name: Install dependencies 
           command: |
             # your code here
             yum install gcc openssl-devel bzip2-devel libffi-devel gzip make -y
       - run:
-          name: Install dependencies Ansible
+          name: Install dependencies Python
           command: |
             # your code here
-            yum install ansible
+            yum install python
       # - run:
       #     name: Get backend url
       #     command: |
