@@ -306,7 +306,8 @@ jobs:
             make
             make install
             apk --no-cache add groff
-            # cp -r builder/* /opt/aws-cli/
+            cp -r builder/* /opt/aws-cli/
+            aws help
             apk add --update ansible
             cd ..
             # exit 1
@@ -316,7 +317,7 @@ jobs:
             # Your code here
             pwd
             cd .circleci/ansible
-            cat inventory.txt
+            cat /root/project/.circleci/ansible/inventory.txt
             ansible-playbook -i inventory.txt configure-server.yml
             exit 1
       # Here's where you will add some code to rollback on failure  
