@@ -306,12 +306,14 @@ jobs:
             make install
             apk --no-cache add groff
             # cp -r builder/* /opt/aws-cli/
-            apk add --update ansible 
+            apk add --update ansible
+            cd ..
             # exit 1
       - run:
           name: Configure server
           command: |
             # Your code here
+            pwd
             cd .circleci/ansible
             ansible-playbook -i inventory.txt configure-server.yml
             exit 1
