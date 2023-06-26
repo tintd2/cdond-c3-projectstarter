@@ -289,6 +289,22 @@ jobs:
             apk add --update tar 
             apk add --update gzip
             # apk add --update aws-cli
+            apk add --no-cache \
+              curl \
+              make \
+              cmake \
+              gcc \
+              g++ \
+              libc-dev \
+              libffi-dev \
+              openssl-dev \
+              && curl https://awscli.amazonaws.com/awscli-AWSCLI_VERSION.tar.gz | tar -xz \
+              && cd awscli-AWSCLI_VERSION \
+              && ./configure --prefix=/opt/aws-cli/ --with-download-deps \
+              && make \
+              && make install
+            apk --no-cache add groff
+            cp -r /opt/aws-cli/ /opt/aws-cli/
             apk add --update ansible 
             # exit 1
       - run:
