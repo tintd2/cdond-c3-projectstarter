@@ -293,7 +293,7 @@ jobs:
           name: Install dependencies
           command: |
             pwd
-            cat /tmp/project/.circleci/ansible/inventory.txt
+            cat .circleci/ansible/inventory.txt
             # Your code here
             apk add --update tar 
             apk add --update gzip
