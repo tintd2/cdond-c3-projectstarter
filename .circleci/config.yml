@@ -265,8 +265,9 @@ jobs:
       - persist_to_workspace:
           root: ~/
           paths:
-            - project/.circleci/ansible/inventory.txt
-
+            # - project/.circleci/ansible/inventory.txt
+            - project/.circleci/ansible
+            
       # Here's where you will add some code to rollback on failure      
       - destroy-environment
 
@@ -283,8 +284,8 @@ jobs:
           fingerprints: ["f9:4c:9e:c3:f0:b3:f4:a5:e8:e1:1f:bf:eb:ce:73:9c"] # You can get this ID in the section where you registered the SSH Key
       # attach workspace
       - attach_workspace:
-          #at: .
-          at: ~/project/.circleci/ansible/inventory.txt
+          at: .
+          #at: ~/project/.circleci/ansible/inventory.txt
       - run:
           name: Install dependencies
           command: |
