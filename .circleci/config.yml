@@ -383,7 +383,7 @@ jobs:
           name: Install dependencies Python
           command: |
             # your code here
-            yum install python
+            yum install python3
       # - run:
       #     name: Get backend url
       #     command: |
