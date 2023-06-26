@@ -420,8 +420,8 @@ jobs:
             # unzip awscli-bundle.zip
             # ./awscli-bundle/install -i /usr/local/aws -b /usr/local/bin/aws
             # python3.7 awscli-bundle/install -i /usr/local/aws -b /usr/local/bin/aws
-            # aws --version
             python3.7 -m pip install awscli
+            aws --version
             
 
       # - run:
