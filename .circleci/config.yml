@@ -380,7 +380,7 @@ jobs:
             # your code here
             # yum -y install epel-release
             # yum -y update
-            yum install gcc openssl-devel bzip2-devel libffi-devel gzip make -y tar
+            yum install gcc openssl-devel bzip2-devel libffi-devel gzip make -y tar unzip
       - run:
           name: Install dependencies Python
           command: |
