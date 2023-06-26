@@ -381,32 +381,32 @@ jobs:
             # yum -y install epel-release
             # yum -y update
             yum install gcc openssl-devel bzip2-devel libffi-devel gzip make -y tar
-      - run:
-          name: Install dependencies Python
-          command: |
-            # your code here
-            # wget https://www.python.org/ftp/python/3.7.11/Python-3.7.11.tgz  
-            curl "https://www.python.org/ftp/python/3.7.11/Python-3.7.11.tgz" -o "Python-3.7.11.tgz"
-            tar xzf Python-3.7.11.tgz
-            cd Python-3.7.11 
-            ./configure --enable-optimizations 
-            make altinstall 
-            cd ..
-            rm Python-3.7.11.tgz 
-            python3.7 -V 
-      - run:
-          name: Install dependencies Ansible
-          command: |
-            curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
-            python3.7 get-pip.py --user
-            python3.7 -m pip install --user ansible
+      # - run:
+      #     name: Install dependencies Python
+      #     command: |
+      #       # your code here
+      #       # wget https://www.python.org/ftp/python/3.7.11/Python-3.7.11.tgz  
+      #       curl "https://www.python.org/ftp/python/3.7.11/Python-3.7.11.tgz" -o "Python-3.7.11.tgz"
+      #       tar xzf Python-3.7.11.tgz
+      #       cd Python-3.7.11 
+      #       ./configure --enable-optimizations 
+      #       make altinstall 
+      #       cd ..
+      #       rm Python-3.7.11.tgz 
+      #       python3.7 -V 
+      # - run:
+      #     name: Install dependencies Ansible
+      #     command: |
+      #       curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
+      #       python3.7 get-pip.py --user
+      #       python3.7 -m pip install --user ansible
       
       - run:
           name: Install dependencies Node
           command: |
             yum update
             curl -sL https://rpm.nodesource.com/setup_13.x | bash -
-            yum install nodejs
+            yum install nodejs -y
             node --version
             
 
