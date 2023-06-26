@@ -381,19 +381,19 @@ jobs:
             # yum -y install epel-release
             # yum -y update
             yum install gcc openssl-devel bzip2-devel libffi-devel gzip make -y tar
-      # - run:
-      #     name: Install dependencies Python
-      #     command: |
-      #       # your code here
-      #       # wget https://www.python.org/ftp/python/3.7.11/Python-3.7.11.tgz  
-      #       curl "https://www.python.org/ftp/python/3.7.11/Python-3.7.11.tgz" -o "Python-3.7.11.tgz"
-      #       tar xzf Python-3.7.11.tgz
-      #       cd Python-3.7.11 
-      #       ./configure --enable-optimizations 
-      #       make altinstall 
-      #       cd ..
-      #       rm Python-3.7.11.tgz 
-      #       python3.7 -V 
+      - run:
+          name: Install dependencies Python
+          command: |
+            # your code here
+            # wget https://www.python.org/ftp/python/3.7.11/Python-3.7.11.tgz  
+            curl "https://www.python.org/ftp/python/3.7.11/Python-3.7.11.tgz" -o "Python-3.7.11.tgz"
+            tar xzf Python-3.7.11.tgz
+            cd Python-3.7.11 
+            ./configure --enable-optimizations 
+            make altinstall 
+            cd ..
+            rm Python-3.7.11.tgz 
+            python3.7 -V 
       # - run:
       #     name: Install dependencies Ansible
       #     command: |
@@ -410,14 +410,14 @@ jobs:
             node --version
             npm -v
 
-      # - run:
-      #     name: Install dependencies Awscli
-      #     command: |
-      #       curl "https://s3.amazonaws.com/aws-cli/awscli-bundle.zip" -o "awscli-bundle.zip"
-      #       unzip awscli-bundle.zip
-      #       ./awscli-bundle/install -i /usr/local/aws -b /usr/local/bin/aws
-      #       /usr/local/bin/python3.7 awscli-bundle/install -i /usr/local/aws -b /usr/local/bin/aws
-      #       aws --version
+      - run:
+          name: Install dependencies Awscli
+          command: |
+            curl "https://s3.amazonaws.com/aws-cli/awscli-bundle.zip" -o "awscli-bundle.zip"
+            unzip awscli-bundle.zip
+            ./awscli-bundle/install -i /usr/local/aws -b /usr/local/bin/aws
+            /usr/local/bin/python3.7 awscli-bundle/install -i /usr/local/aws -b /usr/local/bin/aws
+            aws --version
             
 
       # - run:
