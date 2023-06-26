@@ -251,9 +251,9 @@ jobs:
           command: |
             # Your code here
             # Fetch the public IP of the EC2 instance
-            # --filters "Name=tag:Name,Values=udapeople-backend-${CIRCLE_WORKFLOW_ID:0:7}" \
+            # --filters "Name=tag:Name,Values=ansible" \
             export PUBLIC_IP=$(aws ec2 describe-instances \
-              --filters "Name=tag:Name,Values=ansible" \
+              --filters "Name=tag:Name,Values=backend-${CIRCLE_WORKFLOW_ID:0:7}" \
               --query "Reservations[0].Instances[0].PublicIpAddress" \
               --output text)
             # exit 1
