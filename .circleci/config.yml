@@ -408,6 +408,16 @@ jobs:
             curl -sL https://rpm.nodesource.com/setup_13.x | bash -
             yum install nodejs -y
             node --version
+            npm -v
+
+      # - run:
+      #     name: Install dependencies Awscli
+      #     command: |
+      #       curl "https://s3.amazonaws.com/aws-cli/awscli-bundle.zip" -o "awscli-bundle.zip"
+      #       unzip awscli-bundle.zip
+      #       ./awscli-bundle/install -i /usr/local/aws -b /usr/local/bin/aws
+      #       /usr/local/bin/python3.7 awscli-bundle/install -i /usr/local/aws -b /usr/local/bin/aws
+      #       aws --version
             
 
       # - run:
