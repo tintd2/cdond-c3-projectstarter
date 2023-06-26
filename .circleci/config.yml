@@ -256,7 +256,7 @@ jobs:
               --filters "Name=tag:Name,Values=ansible" \
               --query "Reservations[0].Instances[0].PublicIpAddress" \
               --output text)
-            # exit 1
+            exit 1
             # Write the public IP to the Ansible inventory file
             echo "backend ansible_host=${PUBLIC_IP}" >> .circleci/ansible/inventory.txt
             cat .circleci/ansible/inventory.txt
