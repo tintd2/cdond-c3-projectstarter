@@ -290,6 +290,8 @@ jobs:
             # Your code here
             apk add --update tar 
             apk add --update gzip
+            apk add curl
+            apk add openssl-dev
             # apk add --update aws-cli
             #apk add --no-cache \
             #  curl \
