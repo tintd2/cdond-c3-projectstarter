@@ -306,7 +306,7 @@ jobs:
             make
             make install
             apk --no-cache add groff
-            cp -r builder/* /opt/aws-cli/
+            # cp -r builder/* /opt/aws-cli/
             aws help
             apk add --update ansible
             cd ..
