@@ -18,7 +18,10 @@
       # Your code here
       #pause:
       #  seconds: 600
-
+    - name: Update apt cache
+      apt:
+        update_cache: yes
+        
     - name: "install python for Ansible."
       # Your code here 
       become: true
@@ -26,6 +29,15 @@
         name: python
         state: present
 
+  tasks:
+  - name: Verify Python installation
+    command: python --version
+    register: python_version
+
+  - name: Display Python version
+    debug:
+      var: python_version.stdout_lines
+      
   # Get the environment variables from CircleCI and add to the EC2 instance
   environment:
     - TYPEORM_CONNECTION: "{{ lookup('env', 'TYPEORM_CONNECTION')}}"  
