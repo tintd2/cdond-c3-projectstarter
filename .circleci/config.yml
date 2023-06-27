@@ -1,4 +1,4 @@
-# aws cloudformation deploy --template-file cloudfront.yml --stack-name InitialStack --parameter-overrides WorkflowID=mybuket589442666723
+# aws cloudformation deploy --template-file cloudfront.yml --stack-name InitialStack --parameter-overrides WorkflowID=mybuket589442666723 --profile=udacity --region=us-east-1
 version: 2.1
 
 orbs:
@@ -25,7 +25,7 @@ commands:
             fi
             aws cloudformation delete-stack --stack-name udapeople-frontend-<<parameters.workflow_id>>
             aws cloudformation delete-stack --stack-name udapeople-backend-<<parameters.workflow_id>>
-            aws cloudformation delete-stack --stack-name udapeople-cloudfront-<<parameters.workflow_id>>
+            # aws cloudformation delete-stack --stack-name udapeople-cloudfront-<<parameters.workflow_id>>
 
   revert-migrations:
     description: Revert the last migration if successfully run in the current workflow.
@@ -228,14 +228,14 @@ jobs:
             yum install -y tar gzip
       # Checkout code from git
       - checkout
-      - run:
-          name: Ensure InitialStack infrastructure exists
-          command: |
-              aws cloudformation deploy \
-                --template-file .circleci/files/cloudfront.yml \
-                --stack-name "udapeople-cloudfront-${CIRCLE_WORKFLOW_ID:0:7}" \
-                --parameter-overrides WorkflowID="${CIRCLE_WORKFLOW_ID:0:7}"  \
-                --tags project=udapeople
+      # - run:
+      #     name: Ensure InitialStack infrastructure exists
+      #     command: |
+      #         aws cloudformation deploy \
+      #           --template-file .circleci/files/cloudfront.yml \
+      #           --stack-name "udapeople-cloudfront-${CIRCLE_WORKFLOW_ID:0:7}" \
+      #           --parameter-overrides WorkflowID="${CIRCLE_WORKFLOW_ID:0:7}"  \
+      #           --tags project=udapeople
       - run:
           name: Ensure back-end infrastructure exists
           command: |
@@ -599,20 +599,36 @@ jobs:
       - destroy-environment:
           workflow_id: ${CIRCLE_WORKFLOW_ID:0:7}
 
-  # cloudfront-update:
-  #   docker:
-  #     # Docker image here that supports AWS CLI
-  #   steps:
-  #     # Checkout code from git
-  #     - run:
-  #         name: Install dependencies
-  #         command: |
-  #           # your code here
-  #     - run:
-  #         name: Update cloudfront distribution
-  #         command: |
-  #           # your code here
-      # Here's where you will add some code to rollback on failure  
+  cloudfront-update:
+    docker:
+      - image: python:3.9.1-alpine3.12
+    steps:
+      - checkout
+      - run:
+          name: Install dependencies
+          command: |
+            apk add --update curl
+            pip install awscli
+      - run:
+          name: Save Old Workflow ID to kvdb.io
+          command: |
+            export OLD_WORKFLOW_ID=$(aws cloudformation \
+                      list-exports --query "Exports[?Name==\`WorkflowID\`].Value" \
+                      --no-paginate --output text)
+            echo "Old Wokflow ID: $OLD_WORKFLOW_ID"
+            curl https://kvdb.io/GSfdWwHzAodZbMHwt62edt/old_workflow_id_${CIRCLE_WORKFLOW_ID:0:7} -d "${OLD_WORKFLOW_ID}"
+      - run:
+          name: Update cloudfront distribution
+          command: |
+            aws cloudformation deploy \
+              --template-file .circleci/files/cloudfront.yml \
+              --stack-name InitialStack \
+              --parameter-overrides WorkflowID="${CIRCLE_WORKFLOW_ID:0:7}" \
+              --tags project=udapeople
+      - revert-migrations:
+          workflow_id: ${CIRCLE_WORKFLOW_ID:0:7}
+      - destroy-environment:
+          workflow_id: ${CIRCLE_WORKFLOW_ID:0:7}
 
 cleanup:
     docker:
@@ -670,7 +686,7 @@ workflows:
           requires: [run-migrations]
       - smoke-test:
           requires: [deploy-backend, deploy-frontend]
-      # - cloudfront-update:
-      #     requires: [smoke-test]
+      - cloudfront-update:
+          requires: [smoke-test]
       # - cleanup:
       #     requires: [cloudfront-update]
