@@ -71,7 +71,7 @@ jobs:
             echo "API_URL=${API_URL}" >> frontend/.env
             cd frontend
             npm install
-            npm run build
+            # npm run build
             
       # - slack/notify:
       #     channel: $SLACK_DEFAULT_CHANEL
