@@ -18,6 +18,7 @@ commands:
           command: |
             aws cloudformation delete-stack --stack-name udapeople-frontend-${CIRCLE_WORKFLOW_ID:0:7}
             aws cloudformation delete-stack --stack-name udapeople-backend-${CIRCLE_WORKFLOW_ID:0:7}
+            aws cloudformation delete-stack --stack-name udapeople-cloudfront-${CIRCLE_WORKFLOW_ID:0:7}
 
   revert-migrations:
     description: Revert the last migration if successfully run in the current workflow.
@@ -225,7 +226,7 @@ jobs:
               aws cloudformation deploy \
                 --template-file .circleci/files/cloudfront.yml \
                 --stack-name "udapeople-cloudfront-${CIRCLE_WORKFLOW_ID:0:7}" \
-                --parameter-overrides ID="${CIRCLE_WORKFLOW_ID:0:7}"  \
+                --parameter-overrides WorkflowID="${CIRCLE_WORKFLOW_ID:0:7}"  \
                 --tags project=udapeople
       - run:
           name: Ensure back-end infrastructure exists
