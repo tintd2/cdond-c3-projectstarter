@@ -75,6 +75,7 @@ jobs:
           name: Build
           command: |
             cd frontend
+            ls
             npm run build
 
       # - slack/notify:
