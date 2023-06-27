@@ -66,6 +66,7 @@ jobs:
           command: |
             # Your code here
             API_URL="http://localhost:3030"
+            echo "API_URL=${API_URL}" >> frontend/.env
             cd frontend
             npm install
             npm run build
