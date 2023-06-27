@@ -65,6 +65,7 @@ jobs:
           name: Build front-end
           command: |
             # Your code here
+            API_URL="http://localhost:3030"
             cd frontend
             npm install
             npm run build
@@ -110,7 +111,6 @@ jobs:
           name: Test Frontend
           command: |
             # Your code here
-            API_URL="http://localhost:3030"
             cd frontend
             npm install
             npm run test
