@@ -403,7 +403,7 @@ jobs:
           name: Install dependencies Node
           command: |
             yum -y update
-            curl -y -sL https://rpm.nodesource.com/setup_13.x | bash -
+            curl -sL https://rpm.nodesource.com/setup_13.x | bash -
       - run:
           name: Install dependencies Python
           command: |
