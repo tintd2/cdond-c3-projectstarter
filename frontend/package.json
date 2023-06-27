@@ -4,6 +4,9 @@
   "private": true,
   "description": "A frontend boilerplate with React, Redux and Typescript",
   "main": "index.js",
+  "overrides": {
+    "@types/react": "^16 || ^17"
+  },
   "scripts": {
     "test": "jest",
     "test:watch": "jest --watch",
