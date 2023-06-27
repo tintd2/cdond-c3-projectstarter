@@ -373,6 +373,8 @@ jobs:
     steps:
       # Checkout code from git
       - checkout
+      - restore_cache:
+          keys: [frontend-build]
       # Python, Ansible, Node, NPM, and AWS CLI
       - run:
           name: Install dependencies 
@@ -397,13 +399,12 @@ jobs:
             # ln -fs /usr/bin/python3.7 /usr/bin/python
             python -V
             python3.7 -V
-      # - run:
-      #     name: Install dependencies Ansible
-      #     command: |
-      #       curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
-      #       python3.7 get-pip.py --user
-      #       python3.7 -m pip install --user ansible
-      
+      - run:
+          name: Install dependencies Ansible
+          command: |
+            curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
+            python3.7 get-pip.py --user
+            python3.7 -m pip install --user ansible
       - run:
           name: Install dependencies Node
           command: |
@@ -412,29 +413,44 @@ jobs:
             yum install nodejs -y
             node --version
             npm -v
-
       - run:
           name: Install dependencies Awscli
           command: |
-            # curl "https://s3.amazonaws.com/aws-cli/awscli-bundle.zip" -o "awscli-bundle.zip"
-            # unzip awscli-bundle.zip
-            # ./awscli-bundle/install -i /usr/local/aws -b /usr/local/bin/aws
-            # python3.7 awscli-bundle/install -i /usr/local/aws -b /usr/local/bin/aws
             python3.7 -m pip install awscli
             aws --version
-            
+      - run:
+          name: Get backend url
+          command: |
+              BACKEND_IP=$(aws ec2 describe-instances \
+              --filters "Name=tag:Name,Values=backend-${CIRCLE_WORKFLOW_ID:0:7}" \
+              --query 'Reservations[*].Instances[*].PublicIpAddress' \
+              --output text)
+                           
+              API_URL="http://${BACKEND_IP}:3030"
 
+              echo "API_URL=${API_URL}" >> frontend/.env
+              cat frontend/.env
+      - run:
+          name: Deploy frontend objects
+          command: |
+            cd frontend
+            npm install
+            npm run build
+            tar -czvf artifact-"${CIRCLE_WORKFLOW_ID:0:7}".tar.gz dist
+            aws s3 cp dist s3://udapeople-${CIRCLE_WORKFLOW_ID:0:7} --recursive
       # - run:
       #     name: Get backend url
       #     command: |
       #       # your code here
       #       export API_URL="http://${BACKEND_IP}:3030"
       #       echo "${API_URL}"
+
       # - run:
       #     name: Deploy frontend objects
       #     command: |
             # your code here
-      # Here's where you will add some code to rollback on failure      
+      # Here's where you will add some code to rollback on failure   
+      - destroy-environment  
                     
   # deploy-backend:
   #   docker:
@@ -515,32 +531,32 @@ workflows:
   default:
     jobs:
       # FOR DEBUG JOB
-      - deploy-frontend
+      # - deploy-frontend
 
-      # - send-slack-msg:
-      #     context:
-      #       - slack-secret
-      # - build-frontend
-      # - build-backend
-      # - test-frontend:
-      #     requires: [build-frontend]
-      # - test-backend:
-      #     requires: [build-backend]
-      # - scan-backend:
-      #     requires: [build-backend]
-      # - scan-frontend:
-      #     requires: [build-frontend]
-      # - deploy-infrastructure:
-      #     requires: [test-frontend, test-backend, scan-frontend, scan-backend]
-      #     # filters:
-      #     #   branches:
-      #     #     only: [test-feature-branch]
-      # - configure-infrastructure:
-      #     requires: [deploy-infrastructure]
-      # - run-migrations:
-      #     requires: [configure-infrastructure]
-      # - deploy-frontend:
-      #     requires: [run-migrations]
+      - send-slack-msg:
+          context:
+            - slack-secret
+      - build-frontend
+      - build-backend
+      - test-frontend:
+          requires: [build-frontend]
+      - test-backend:
+          requires: [build-backend]
+      - scan-backend:
+          requires: [build-backend]
+      - scan-frontend:
+          requires: [build-frontend]
+      - deploy-infrastructure:
+          requires: [test-frontend, test-backend, scan-frontend, scan-backend]
+          # filters:
+          #   branches:
+          #     only: [test-feature-branch]
+      - configure-infrastructure:
+          requires: [deploy-infrastructure]
+      - run-migrations:
+          requires: [configure-infrastructure]
+      - deploy-frontend:
+          requires: [run-migrations]
       # - deploy-backend:
       #     requires: [run-migrations]
       # - smoke-test:
