@@ -70,9 +70,9 @@ jobs:
             API_URL="http://localhost:3030"
             echo "API_URL=${API_URL}" >> frontend/.env
             cd frontend
-            rm -rf node_modules
-            rm -f package-lock.json
-             # 👇️ clean npm cache
+            #rm -rf node_modules
+            # rm -f package-lock.json
+            # 👇️ clean npm cache
             npm cache clean --force
             npm install
       - run:
