@@ -97,8 +97,8 @@ jobs:
       - image: circleci/node:13.8.0
     steps:
       - checkout
-      - restore_cache:
-          keys: [backend-build]
+      # - restore_cache:
+      #     keys: [backend-build]
       - run:
           name: Build back-end
           command: |
@@ -509,7 +509,9 @@ jobs:
             # npm install typescript@latest -g
             npm install
             npm run build
+            ls
             tar -czf artifact.tar.gz dist/* package*
+            ls
             cd ..
             cp backend/artifact.tar.gz .circleci/ansible/roles/deploy/files
             ls .circleci/ansible/roles/deploy/files
