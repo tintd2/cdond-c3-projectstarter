@@ -65,13 +65,14 @@ jobs:
           name: Build front-end
           command: |
             # Your code here
+            node --version
+            npm -v
             API_URL="http://localhost:3030"
             echo "API_URL=${API_URL}" >> frontend/.env
             cd frontend
             npm install
             npm run build
-            node --version
-            npm -v
+            
       # - slack/notify:
       #     channel: $SLACK_DEFAULT_CHANEL
       #     event: fail
