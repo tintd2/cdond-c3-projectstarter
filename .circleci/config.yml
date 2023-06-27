@@ -644,7 +644,7 @@ jobs:
             name: Remove old stacks and files
             command: |
               # export OldWorkflowID=$(curl --insecure https://kvdb.io/GSfdWwHzAodZbMHwt62edt/old_workflow_id)
-              export OldWorkflowID=$(curl --insecure https://kvdb.io/MEadVxp88F4amoSjEq3Djv/old_workflow_id_${CIRCLE_WORKFLOW_ID:0:7})
+              export OldWorkflowID=$(curl --insecure https://kvdb.io/GSfdWwHzAodZbMHwt62edt/old_workflow_id_${CIRCLE_WORKFLOW_ID:0:7})
               echo Old Workflow ID: $OldWorkflowID
               echo CIRCLE_WORKFLOW_ID "${CIRCLE_WORKFLOW_ID:0:7}"
               
