@@ -426,7 +426,7 @@ jobs:
           command: |
             yum update
             curl -sL https://rpm.nodesource.com/setup_13.x | bash -
-            yum install nodejs -y
+            yum -y install nodejs
             node --version
             npm -v
       - run:
