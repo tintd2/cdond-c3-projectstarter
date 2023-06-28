@@ -93,7 +93,6 @@ jobs:
           name: Build
           command: |
             apt update
-            apt install libssl-dev
             apt install openssl
             cd frontend
             ls
@@ -119,32 +118,19 @@ jobs:
       - image: circleci/node:13.8.0
     steps:
       - checkout
-      - restore_cache:
-          keys: [backend-build]
+      # - restore_cache:
+      #     keys: [backend-build]
       - run:
           name: Build back-end
           command: |
             # Your code here
-            apt update
-            apt install openssl
             cd backend
             npm install
             npm run build
-            exit 1
-      
-      - slack/notify:
-          channel: $SLACK_DEFAULT_CHANEL
-          event: fail
-          template: basic_fail_1
-      
-      - slack/notify:
-          channel: $SLACK_DEFAULT_CHANEL
-          event: pass
-          template: success_tagged_deploy_1
-
-      - save_cache:
-          paths: [backend/node_modules]
-          key: backend-build
+            #  exit 1
+      # - save_cache:
+      #     paths: [backend/node_modules]
+      #     key: backend-build
 
   test-frontend:
     docker:
@@ -688,50 +674,51 @@ workflows:
   default:
     jobs:
       # FOR DEBUG JOB
-      # - build-backend
+      - build-frontend
       # - deploy-backend:
       #     requires: [build-backend]
+
       # - send-slack-msg:
       #     context:
       #       - slack-secret
-      - build-frontend:
-          context:
-            - slack-secret
-      - build-backend:
-          context:
-            - slack-secret
-      - test-frontend:
-          context:
-            - slack-secret
-          requires: [build-frontend]
-      - test-backend:
-          context:
-            - slack-secret
-          requires: [build-backend]
-      - scan-backend:
-          context:
-            - slack-secret
-          requires: [build-backend]
-      - scan-frontend:
-          context:
-            - slack-secret
-          requires: [build-frontend]
-      - deploy-infrastructure:
-          requires: [test-frontend, test-backend, scan-frontend, scan-backend]
-          filters:
-            branches:
-              only: [master]
-      - configure-infrastructure:
-          requires: [deploy-infrastructure]
-      - run-migrations:
-          requires: [configure-infrastructure]
-      - deploy-frontend:
-          requires: [run-migrations]
-      - deploy-backend:
-          requires: [run-migrations]
-      - smoke-test:
-          requires: [deploy-backend, deploy-frontend]
-      - cloudfront-update:
-          requires: [smoke-test]
-      - cleanup:
-          requires: [cloudfront-update]
+      # - build-frontend:
+      #     context:
+      #       - slack-secret
+      # - build-backend:
+      #     context:
+      #       - slack-secret
+      # - test-frontend:
+      #     context:
+      #       - slack-secret
+      #     requires: [build-frontend]
+      # - test-backend:
+      #     context:
+      #       - slack-secret
+      #     requires: [build-backend]
+      # - scan-backend:
+      #     context:
+      #       - slack-secret
+      #     requires: [build-backend]
+      # - scan-frontend:
+      #     context:
+      #       - slack-secret
+      #     requires: [build-frontend]
+      # - deploy-infrastructure:
+      #     requires: [test-frontend, test-backend, scan-frontend, scan-backend]
+      #     filters:
+      #       branches:
+      #         only: [master]
+      # - configure-infrastructure:
+      #     requires: [deploy-infrastructure]
+      # - run-migrations:
+      #     requires: [configure-infrastructure]
+      # - deploy-frontend:
+      #     requires: [run-migrations]
+      # - deploy-backend:
+      #     requires: [run-migrations]
+      # - smoke-test:
+      #     requires: [deploy-backend, deploy-frontend]
+      # - cloudfront-update:
+      #     requires: [smoke-test]
+      # - cleanup:
+      #     requires: [cloudfront-update]
