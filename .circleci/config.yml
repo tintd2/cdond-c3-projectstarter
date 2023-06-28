@@ -674,7 +674,9 @@ workflows:
   default:
     jobs:
       # FOR DEBUG JOB
-      - build-frontend
+      - build-frontend:
+          context:
+            - slack-secret
       # - deploy-backend:
       #     requires: [build-backend]
 
