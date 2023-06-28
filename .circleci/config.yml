@@ -79,7 +79,7 @@ jobs:
           name: Build front-end
           command: |
             # Your code here
-            apt-get dist-upgrade
+            sudo apt-get dist-upgrade
             node --version
             npm -v
             API_URL="http://localhost:3030"
