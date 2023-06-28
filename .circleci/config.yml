@@ -681,9 +681,8 @@ workflows:
       - send-slack-msg:
           context:
             - slack-secret
-      - build-frontend:
-          context:
-            - slack-secret
+      - build-frontend
+      
       - build-backend
       - test-frontend:
           requires: [build-frontend]
