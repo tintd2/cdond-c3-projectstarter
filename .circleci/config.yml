@@ -59,8 +59,13 @@ jobs:
             echo $SLACK_DEFAULT_CHANEL
       - slack/notify:
           channel: $SLACK_DEFAULT_CHANEL
+          event: fail
+          # event: always
+          template: basic_fail_1
+      - slack/notify:
+          channel: $SLACK_DEFAULT_CHANEL
           # event: fail
-          event: always
+          event: pass
           template: basic_fail_1
   
   build-frontend:
@@ -92,15 +97,16 @@ jobs:
             npm run build
             exit 1
             
-      - slack/notify:
-          channel: $SLACK_DEFAULT_CHANEL
-          event: fail
-          template: basic_fail_1
+      # - slack/notify:
+      #     channel: $SLACK_DEFAULT_CHANEL
+      #     event: fail
+      #     template: basic_fail_1
       
-      - slack/notify:
-          channel: $SLACK_DEFAULT_CHANEL
-          event: pass
-          template: success_tagged_deploy_1
+      # - slack/notify:
+      #     channel: $SLACK_DEFAULT_CHANEL
+      #     event: pass
+      #     template: success_tagged_deploy_1
+      - send-slack-msg
 
       - save_cache:
           paths: [frontend/node_modules]
