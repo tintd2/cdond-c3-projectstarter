@@ -79,6 +79,7 @@ jobs:
           name: Build front-end
           command: |
             # Your code here
+            apt-get dist-upgrade
             node --version
             npm -v
             API_URL="http://localhost:3030"
@@ -92,8 +93,6 @@ jobs:
       - run:
           name: Build
           command: |
-            apt update
-            apt install openssl
             cd frontend
             ls
             npm run build
