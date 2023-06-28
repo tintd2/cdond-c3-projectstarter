@@ -690,10 +690,9 @@ workflows:
       # - build-backend
       # - deploy-backend:
       #     requires: [build-backend]
-
-      - send-slack-msg:
-          context:
-            - slack-secret
+      # - send-slack-msg:
+      #     context:
+      #       - slack-secret
       - build-frontend:
           context:
             - slack-secret
