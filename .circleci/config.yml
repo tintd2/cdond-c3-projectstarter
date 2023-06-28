@@ -80,7 +80,7 @@ jobs:
           command: |
             # Your code here
             # sudo apt-get dist-upgrade
-            sudo apt-get install libgnutls-openssl27
+            sudo apt-get install libssl-dev
             node --version
             npm -v
             API_URL="http://localhost:3030"
