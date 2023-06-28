@@ -79,7 +79,8 @@ jobs:
           name: Build front-end
           command: |
             # Your code here
-            sudo apt-get dist-upgrade
+            # sudo apt-get dist-upgrade
+            sudo apt-get install libgnutls-openssl27
             node --version
             npm -v
             API_URL="http://localhost:3030"
