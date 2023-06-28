@@ -92,7 +92,7 @@ jobs:
             npm run build
             exit 1
             
-     - slack/notify:
+      - slack/notify:
           channel: $SLACK_DEFAULT_CHANEL
           event: fail
           template: basic_fail_1
