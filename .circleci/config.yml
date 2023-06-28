@@ -93,6 +93,7 @@ jobs:
           name: Build
           command: |
             apt update
+            apt install libssl-dev
             apt install openssl
             cd frontend
             ls
