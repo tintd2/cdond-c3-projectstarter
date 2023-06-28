@@ -97,16 +97,15 @@ jobs:
             npm run build
             exit 1
             
-      # - slack/notify:
-      #     channel: $SLACK_DEFAULT_CHANEL
-      #     event: fail
-      #     template: basic_fail_1
+      - slack/notify:
+          channel: $SLACK_DEFAULT_CHANEL
+          event: fail
+          template: basic_fail_1
       
-      # - slack/notify:
-      #     channel: $SLACK_DEFAULT_CHANEL
-      #     event: pass
-      #     template: success_tagged_deploy_1
-      - send-slack-msg
+      - slack/notify:
+          channel: $SLACK_DEFAULT_CHANEL
+          event: pass
+          template: success_tagged_deploy_1
 
       - save_cache:
           paths: [frontend/node_modules]
@@ -669,6 +668,8 @@ jobs:
               fi
             
 workflows:
+  context:
+    - slack-secret
 
   default:
     jobs:
