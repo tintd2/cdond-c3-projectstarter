@@ -2,7 +2,7 @@
 version: 2.1
 
 orbs:
-  slack: circleci/slack@4.10.1
+  slack: circleci/slack@4.12.5
   aws-cli: circleci/aws-cli@2.0.3
   node: circleci/node@5.1.0
 
@@ -80,8 +80,8 @@ jobs:
           command: |
             # Your code here
             # sudo apt-get dist-upgrade
-            sudo apt install libssl-dev
-            sudo apt install openssl
+            # sudo apt install libssl-dev
+            # sudo apt install openssl
             node --version
             npm -v
             API_URL="http://localhost:3030"
