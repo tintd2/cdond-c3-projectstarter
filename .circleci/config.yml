@@ -82,6 +82,7 @@ jobs:
             # sudo apt-get dist-upgrade
             # sudo apt install libssl-dev
             # sudo apt install openssl
+            sudo apt-get install libssl-dev
             node --version
             npm -v
             API_URL="http://localhost:3030"
