@@ -76,13 +76,34 @@ jobs:
       - restore_cache:
           keys: [frontend-build]
       - run:
+          name: Install ssl
+          command: |
+            # Your code here
+            # sudo apt-get dist-upgrade
+            # sudo apt install libssl-dev
+            # sudo apt install openssl
+            # sudo apt-get install libssl-dev
+            sudo apt-get update && sudo apt-get upgrade
+            openssl version -a
+            sudo apt install build-essential checkinstall zlib1g-dev -y
+            cd /usr/local/src/
+            sudo wget https://www.openssl.org/source/openssl-1.1.1c.tar.gz
+            sudo tar -xf openssl-1.1.1c.tar.gz
+            cd openssl-1.1.1c
+            sudo ./config --prefix=/usr/local/ssl --openssldir=/usr/local/ssl shared zlib
+            sudo make
+            sudo make test
+            sudo make install
+            sudo vi /etc/ld.so.conf.d/openssl-1.1.1c.conf
+            sudo ldconfig -v
+      - run:
           name: Build front-end
           command: |
             # Your code here
             # sudo apt-get dist-upgrade
             # sudo apt install libssl-dev
             # sudo apt install openssl
-            sudo apt-get install libssl-dev
+            # sudo apt-get install libssl-dev
             node --version
             npm -v
             API_URL="http://localhost:3030"
