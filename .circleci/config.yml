@@ -92,6 +92,8 @@ jobs:
       - run:
           name: Build
           command: |
+            apt update
+            apt install openssl
             cd frontend
             ls
             npm run build
