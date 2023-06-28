@@ -80,6 +80,7 @@ jobs:
           command: |
             # Your code here
             # sudo apt-get install ca-certificates
+            openssl version -a
             wget --no-check-certificate https://www.openssl.org/source/old/1.1.0/openssl-1.1.0g.tar.gz
             tar xzvf openssl-1.1.0g.tar.gz
             cd openssl-1.1.0g
@@ -87,7 +88,7 @@ jobs:
             make
             sudo make install
 
-            # openssl version -a
+            openssl version -a
       - run:
           name: Build front-end
           command: |
