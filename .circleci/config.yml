@@ -668,8 +668,6 @@ jobs:
               fi
             
 workflows:
-  context:
-    - slack-secret
 
   default:
     jobs:
