@@ -69,8 +69,8 @@ jobs:
   #         template: success_tagged_deploy_1
   
   build-frontend:
-    docker:
-      - image: node/default
+    # docker:
+    #   - image: node/default
     steps:
       - checkout
       - restore_cache:
