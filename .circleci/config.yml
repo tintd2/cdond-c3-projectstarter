@@ -70,7 +70,7 @@ jobs:
   
   build-frontend:
     docker:
-      - image: circleci/node:13.8.0
+      - image: circleci/node:13.14.0
     steps:
       - checkout
       - restore_cache:
@@ -81,7 +81,7 @@ jobs:
             # Your code here
             # sudo apt-get dist-upgrade
             # sudo apt install libssl-dev
-            sudo apt install openssl
+            # sudo apt install openssl
             node --version
             npm -v
             API_URL="http://localhost:3030"
