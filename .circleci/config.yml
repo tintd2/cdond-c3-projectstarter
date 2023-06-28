@@ -70,7 +70,7 @@ jobs:
   
   build-frontend:
     docker:
-      - image: circleci/node:13.14.0
+      - image: node/default
     steps:
       - checkout
       - restore_cache:
