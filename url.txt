@@ -6,4 +6,5 @@ http://udapeople-7daa87c.s3-website-us-east-1.amazonaws.com/#/employees
 
 http://54.224.169.124:3030/api/status
 
+CLOUDFRONT
 http://d353q2duwjmf8q.cloudfront.net/#/employees

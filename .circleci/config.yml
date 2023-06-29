@@ -652,11 +652,6 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-            # your code here
-      - run:
-          name: Get backend url
-          command: |
-            # your code here
             apk add --update curl
             pip install awscli
       - run:
@@ -780,18 +775,18 @@ jobs:
           event: pass
           template: basic_success_1      
   
-  test:
-    docker:
-      - image: cimg/base:stable
-    steps:
-      - run:
-          name: Install dependencies
-          command: |
-            apk add --update curl
-            pip install awscli
-            exit 1
-      - revert-migrations:
-          workflow_id: ${CIRCLE_WORKFLOW_ID:0:7}
+  # test:
+  #   docker:
+  #     - image: cimg/base:stable
+  #   steps:
+  #     - run:
+  #         name: Install dependencies
+  #         command: |
+  #           apk add --update curl
+  #           pip install awscli
+  #           exit 1
+  #     - revert-migrations:
+  #         workflow_id: ${CIRCLE_WORKFLOW_ID:0:7}
 
 workflows:
 
@@ -808,6 +803,7 @@ workflows:
       #     context:
       #       - slack-secret
       #     requires: [deploy-infrastructure]
+      # - test
       
       # - build-frontend:
       #     context:
@@ -819,62 +815,61 @@ workflows:
       #     context:
       #       - slack-secret
 
-      # - build-frontend:
-      #     context:
-      #       - slack-secret
-      # - build-backend:
-      #     context:
-      #       - slack-secret
-      # - test-frontend:
-      #     context:
-      #       - slack-secret
-      #     requires: [build-frontend]
-      # - test-backend:
-      #     context:
-      #       - slack-secret
-      #     requires: [build-backend]
-      # - scan-backend:
-      #     context:
-      #       - slack-secret
-      #     requires: [build-backend]
-      # - scan-frontend:
-      #     context:
-      #       - slack-secret
-      #     requires: [build-frontend]
-      # - deploy-infrastructure:
-      #     context:
-      #       - slack-secret
-      #     requires: [test-frontend, test-backend, scan-frontend, scan-backend]
-      #     filters:
-      #       branches:
-      #         only: [master]
-      # - configure-infrastructure:
-      #     context:
-      #       - slack-secret
-      #     requires: [deploy-infrastructure]
-      # - run-migrations:
-      #     context:
-      #       - slack-secret
-      #     requires: [configure-infrastructure]
-      # - deploy-frontend:
-      #     context:
-      #       - slack-secret
-      #     requires: [run-migrations]
-      # - deploy-backend:
-      #     context:
-      #       - slack-secret
-      #     requires: [run-migrations]
-      # - smoke-test:
-      #     context:
-      #       - slack-secret
-      #     requires: [deploy-backend, deploy-frontend]
-      # - cloudfront-update:
-      #     context:
-      #       - slack-secret
-      #     requires: [smoke-test]
-      # - cleanup:
-      #     context:
-      #       - slack-secret
-      #     requires: [cloudfront-update]
+      - build-frontend:
+          context:
+            - slack-secret
+      - build-backend:
+          context:
+            - slack-secret
+      - test-frontend:
+          context:
+            - slack-secret
+          requires: [build-frontend]
+      - test-backend:
+          context:
+            - slack-secret
+          requires: [build-backend]
+      - scan-backend:
+          context:
+            - slack-secret
+          requires: [build-backend]
+      - scan-frontend:
+          context:
+            - slack-secret
+          requires: [build-frontend]
+      - deploy-infrastructure:
+          context:
+            - slack-secret
+          requires: [test-frontend, test-backend, scan-frontend, scan-backend]
+          filters:
+            branches:
+              only: [master]
+      - configure-infrastructure:
+          context:
+            - slack-secret
+          requires: [deploy-infrastructure]
+      - run-migrations:
+          context:
+            - slack-secret
+          requires: [configure-infrastructure]
+      - deploy-frontend:
+          context:
+            - slack-secret
+          requires: [run-migrations]
+      - deploy-backend:
+          context:
+            - slack-secret
+          requires: [run-migrations]
+      - smoke-test:
+          context:
+            - slack-secret
+          requires: [deploy-backend, deploy-frontend]
+      - cloudfront-update:
+          context:
+            - slack-secret
+          requires: [smoke-test]
+      - cleanup:
+          context:
+            - slack-secret
+          requires: [cloudfront-update]
 
-      - test
