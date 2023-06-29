@@ -203,6 +203,14 @@ jobs:
       - save_cache:
           paths: [frontend/test]
           key: frontend-test
+      - slack/notify:
+          channel: $SLACK_DEFAULT_CHANEL
+          event: fail
+          template: basic_fail_1
+      - slack/notify:
+          channel: $SLACK_DEFAULT_CHANEL
+          event: pass
+          template: basic_success_1
                 
   test-backend:
     docker:
@@ -229,6 +237,14 @@ jobs:
       - save_cache:
           paths: [backend/test]
           key: backend-test
+      - slack/notify:
+          channel: $SLACK_DEFAULT_CHANEL
+          event: fail
+          template: basic_fail_1
+      - slack/notify:
+          channel: $SLACK_DEFAULT_CHANEL
+          event: pass
+          template: basic_success_1
             
   scan-frontend:
     docker:
@@ -263,6 +279,14 @@ jobs:
       - save_cache:
           paths: [frontend/scan]
           key: frontend-scan
+      - slack/notify:
+          channel: $SLACK_DEFAULT_CHANEL
+          event: fail
+          template: basic_fail_1
+      - slack/notify:
+          channel: $SLACK_DEFAULT_CHANEL
+          event: pass
+          template: basic_success_1
 
   scan-backend:
     docker:
@@ -292,6 +316,14 @@ jobs:
       - save_cache:
           paths: [backend/scan]
           key: backend-scan
+      - slack/notify:
+          channel: $SLACK_DEFAULT_CHANEL
+          event: fail
+          template: basic_fail_1
+      - slack/notify:
+          channel: $SLACK_DEFAULT_CHANEL
+          event: pass
+          template: basic_success_1
 
   deploy-infrastructure:
     docker:
@@ -302,6 +334,7 @@ jobs:
           name: Install tar
           command: |
             yum install -y tar gzip
+            exit 1
       # Checkout code from git
       - checkout
       # - run:
@@ -382,6 +415,14 @@ jobs:
       # Here's where you will add some code to rollback on failure      
       - destroy-environment:
           workflow_id: "${CIRCLE_WORKFLOW_ID:0:7}"
+      - slack/notify:
+          channel: $SLACK_DEFAULT_CHANEL
+          event: fail
+          template: basic_fail_1
+      - slack/notify:
+          channel: $SLACK_DEFAULT_CHANEL
+          event: pass
+          template: basic_success_1
 
   configure-infrastructure:
     docker:
@@ -772,11 +813,13 @@ workflows:
           context:
             - slack-secret
           requires: [build-frontend]
-      # - deploy-infrastructure:
-      #     requires: [test-frontend, test-backend, scan-frontend, scan-backend]
-      #     filters:
-      #       branches:
-      #         only: [master]
+      - deploy-infrastructure:
+          context:
+            - slack-secret
+          requires: [test-frontend, test-backend, scan-frontend, scan-backend]
+          filters:
+            branches:
+              only: [master]
       # - configure-infrastructure:
       #     requires: [deploy-infrastructure]
       # - run-migrations:
