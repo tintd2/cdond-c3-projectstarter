@@ -94,7 +94,7 @@ jobs:
             cd frontend
             ls
             npm run build
-            exit 1
+            # exit 1
       - slack/notify:
           channel: $SLACK_DEFAULT_CHANEL
           event: fail
@@ -117,44 +117,26 @@ jobs:
       - restore_cache:
           keys: [frontend-build]
       - run:
-          name: Install ssl
-          command: |
-            # Your code here
-            # sudo apt-get install ca-certificates
-            # openssl version -a
-            # wget --no-check-certificate https://www.openssl.org/source/old/1.1.0/openssl-1.1.0g.tar.gz
-            # tar xzvf openssl-1.1.0g.tar.gz
-            # cd openssl-1.1.0g
-            # ./config
-            # make
-            # sudo make install
-
-            openssl version -a
-      - run:
           name: Build front-end
           command: |
             # Your code here
-            # sudo apt-get dist-upgrade
-            # sudo apt install libssl-dev
-            # sudo apt install openssl
-            # sudo apt-get install libssl-dev
             node --version
             npm -v
             API_URL="http://localhost:3030"
             echo "API_URL=${API_URL}" >> frontend/.env
             cd frontend
-            #rm -rf node_modules
-            # rm -f package-lock.json
-            # 👇️ clean npm cache
             npm cache clean --force
             npm install
       - run:
           name: Build
           command: |
             cd frontend
-            ls
             npm run build
-            exit 1
+            # exit 1
+
+      - save_cache:
+          paths: [frontend/node_modules]
+          key: frontend-build
             
       - slack/notify:
           channel: $SLACK_DEFAULT_CHANEL
@@ -166,9 +148,6 @@ jobs:
           event: pass
           template: success_tagged_deploy_1
 
-      - save_cache:
-          paths: [frontend/node_modules]
-          key: frontend-build
 
   build-backend:
     docker:
