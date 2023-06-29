@@ -77,6 +77,15 @@ jobs:
           install-yarn: true
           node-version: '13.14'
       - run: node --version
+      - slack/notify:
+          channel: $SLACK_DEFAULT_CHANEL
+          event: fail
+          template: basic_fail_1
+      
+      - slack/notify:
+          channel: $SLACK_DEFAULT_CHANEL
+          event: pass
+          template: success_tagged_deploy_1
 
   build-frontend:
     docker:
