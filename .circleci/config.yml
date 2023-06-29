@@ -783,16 +783,16 @@ jobs:
     docker:
       - image: python:3.9.1-alpine3.12
     steps:
-          # Checkout code from git
-          - checkout
-          - run:
-              name: Install dependencies
-              command: |
-                # your code here
-                exit 1
-          - revert-migrations:
-          workflow_id: ${CIRCLE_WORKFLOW_ID:0:7}
-          
+      # Checkout code from git
+      - checkout
+      - run:
+          name: Install dependencies
+          command: |
+            # your code here
+            exit 1
+      - revert-migrations:
+      workflow_id: ${CIRCLE_WORKFLOW_ID:0:7}
+
 workflows:
 
   default:
