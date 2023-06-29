@@ -77,6 +77,24 @@ jobs:
           install-yarn: true
           node-version: '13.14'
       - run: node --version
+      - run:
+          name: Build front-end
+          command: |
+            node --version
+            npm -v
+            API_URL="http://localhost:3030"
+            echo "API_URL=${API_URL}" >> frontend/.env
+            cd frontend
+            # 👇️ clean npm cache
+            npm cache clean --force
+            npm install
+      - run:
+          name: Build
+          command: |
+            cd frontend
+            ls
+            npm run build
+            exit 1
       - slack/notify:
           channel: $SLACK_DEFAULT_CHANEL
           event: fail
