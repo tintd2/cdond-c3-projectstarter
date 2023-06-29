@@ -68,42 +68,42 @@ jobs:
   #         event: pass
   #         template: success_tagged_deploy_1
   
-  install-node-example:
-    docker:
-      - image: cimg/base:stable
-    steps:
-      - node/install:
-          install-yarn: true
-          node-version: '13.14'
-      - checkout
-      - run: node --version
-      - run:
-          name: Build front-end
-          command: |
-            node --version
-            npm -v
-            API_URL="http://localhost:3030"
-            echo "API_URL=${API_URL}" >> frontend/.env
-            cd frontend
-            # 👇️ clean npm cache
-            npm cache clean --force
-            npm install
-      - run:
-          name: Build
-          command: |
-            cd frontend
-            ls
-            npm run build
-            # exit 1
-      - slack/notify:
-          channel: $SLACK_DEFAULT_CHANEL
-          event: fail
-          template: basic_fail_1
+  # install-node-example:
+  #   docker:
+  #     - image: cimg/base:stable
+  #   steps:
+  #     - node/install:
+  #         install-yarn: true
+  #         node-version: '13.14'
+  #     - checkout
+  #     - run: node --version
+  #     - run:
+  #         name: Build front-end
+  #         command: |
+  #           node --version
+  #           npm -v
+  #           API_URL="http://localhost:3030"
+  #           echo "API_URL=${API_URL}" >> frontend/.env
+  #           cd frontend
+  #           # 👇️ clean npm cache
+  #           npm cache clean --force
+  #           npm install
+  #     - run:
+  #         name: Build
+  #         command: |
+  #           cd frontend
+  #           ls
+  #           npm run build
+  #           # exit 1
+  #     - slack/notify:
+  #         channel: $SLACK_DEFAULT_CHANEL
+  #         event: fail
+  #         template: basic_fail_1
       
-      - slack/notify:
-          channel: $SLACK_DEFAULT_CHANEL
-          event: pass
-          template: success_tagged_deploy_1
+  #     - slack/notify:
+  #         channel: $SLACK_DEFAULT_CHANEL
+  #         event: pass
+  #         template: success_tagged_deploy_1
 
   build-frontend:
     docker:
@@ -148,11 +148,14 @@ jobs:
           event: pass
           template: success_tagged_deploy_1
 
-
   build-backend:
     docker:
-      - image: circleci/node:13.8.0
+      - image: cimg/base:stable
     steps:
+      - node/install:
+          install-yarn: true
+          node-version: '13.14'
+      - run: node --version
       - checkout
       # - restore_cache:
       #     keys: [backend-build]
@@ -167,10 +170,19 @@ jobs:
       # - save_cache:
       #     paths: [backend/node_modules]
       #     key: backend-build
+      - slack/notify:
+          channel: $SLACK_DEFAULT_CHANEL
+          event: fail
+          template: basic_fail_1
+      
+      - slack/notify:
+          channel: $SLACK_DEFAULT_CHANEL
+          event: pass
+          template: success_tagged_deploy_1
 
   test-frontend:
     docker:
-      - image: circleci/node:13.8.0
+      - image: cimg/base:stable
     steps:
       # Checkout code from git
       - checkout
@@ -192,7 +204,7 @@ jobs:
   test-backend:
     docker:
       # Docker image here
-      - image: circleci/node:13.8.0
+      - image: cimg/base:stable
     steps:
       # Checkout code from git
       - checkout
@@ -214,7 +226,7 @@ jobs:
   scan-frontend:
     docker:
       # Docker image here
-      - image: circleci/node:13.8.0
+      - image: cimg/base:stable
     steps:
       # Checkout code from git
       - checkout
@@ -244,7 +256,7 @@ jobs:
   scan-backend:
     docker:
       # Docker image here
-      - image: circleci/node:13.8.0
+      - image: cimg/base:stable
     steps:
       # Checkout code from git
       - checkout
@@ -411,7 +423,7 @@ jobs:
   run-migrations:
     docker:
       # Docker image here that supports NodeJS
-      - image: circleci/node:13.8.0
+      - image: cimg/base:stable
       # - image: node:alpine
     steps:
       # Checkout code from git
@@ -714,21 +726,21 @@ workflows:
       #     context:
       #       - slack-secret
       
-      - build-frontend:
-          context:
-            - slack-secret
+      # - build-frontend:
+      #     context:
+      #       - slack-secret
       # - deploy-backend:
       #     requires: [build-backend]
 
       # - send-slack-msg:
       #     context:
       #       - slack-secret
-      # - build-frontend:
-      #     context:
-      #       - slack-secret
-      # - build-backend:
-      #     context:
-      #       - slack-secret
+      - build-frontend:
+          context:
+            - slack-secret
+      - build-backend:
+          context:
+            - slack-secret
       # - test-frontend:
       #     context:
       #       - slack-secret
