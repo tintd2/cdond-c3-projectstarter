@@ -772,10 +772,10 @@ jobs:
         channel: $SLACK_DEFAULT_CHANEL
         event: fail
         template: basic_fail_1
-      - slack/notify:
-        channel: $SLACK_DEFAULT_CHANEL
-        event: pass
-        template: basic_success_1      
+      # - slack/notify:
+      #   channel: $SLACK_DEFAULT_CHANEL
+      #   event: pass
+      #   template: basic_success_1      
 
 workflows:
 
