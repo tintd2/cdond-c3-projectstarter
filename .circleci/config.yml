@@ -107,7 +107,7 @@ jobs:
 
   build-frontend:
     docker:
-      - image: circleci/node:13.14.0
+      - image: cimg/base:stable
     steps:
       - checkout
       - restore_cache:
@@ -727,13 +727,13 @@ workflows:
   default:
     jobs:
       # FOR DEBUG JOB
-      - install-node-example:
-          context:
-            - slack-secret
-      
-      # - build-frontend:
+      # - install-node-example:
       #     context:
       #       - slack-secret
+      
+      - build-frontend:
+          context:
+            - slack-secret
       # - deploy-backend:
       #     requires: [build-backend]
 
