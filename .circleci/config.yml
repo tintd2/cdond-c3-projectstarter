@@ -4,7 +4,7 @@ version: 2.1
 orbs:
   slack: circleci/slack@4.12.5
   aws-cli: circleci/aws-cli@2.0.3
-  node: circleci/node@5.1.0
+  node: circleci/node:13.14.0
 
 commands:
   destroy-environment:
@@ -70,7 +70,7 @@ jobs:
   
   build-frontend:
     docker:
-      - image: circleci/node
+      - image: circleci/node:13.14.0
     steps:
       - checkout
       - restore_cache:
