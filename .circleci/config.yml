@@ -876,4 +876,4 @@ workflows:
       #       - slack-secret
       #     requires: [cloudfront-update]
 
-      test
+      - test
