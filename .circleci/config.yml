@@ -727,10 +727,7 @@ jobs:
               --stack-name InitialStack \
               --parameter-overrides WorkflowID="${CIRCLE_WORKFLOW_ID:0:7}" \
               --tags project=udapeople
-      # - revert-migrations:
-      #     workflow_id: ${CIRCLE_WORKFLOW_ID:0:7}
-      # - destroy-environment:
-      #     workflow_id: ${CIRCLE_WORKFLOW_ID:0:7}
+        
       - slack/notify:
           channel: $SLACK_DEFAULT_CHANEL
           event: fail
@@ -739,6 +736,11 @@ jobs:
           channel: $SLACK_DEFAULT_CHANEL
           event: pass
           template: basic_success_1
+
+      # - revert-migrations:
+      #     workflow_id: ${CIRCLE_WORKFLOW_ID:0:7}
+      # - destroy-environment:
+      #     workflow_id: ${CIRCLE_WORKFLOW_ID:0:7}
 
   cleanup:
       docker:
@@ -765,6 +767,7 @@ jobs:
                 aws cloudformation delete-stack --stack-name "udapeople-backend-${OldWorkflowID}"
                 aws cloudformation delete-stack --stack-name "udapeople-frontend-${OldWorkflowID}"
               fi
+        
         - slack/notify:
           channel: $SLACK_DEFAULT_CHANEL
           event: fail
@@ -799,6 +802,7 @@ workflows:
       # - send-slack-msg:
       #     context:
       #       - slack-secret
+
       - build-frontend:
           context:
             - slack-secret
