@@ -746,14 +746,6 @@ jobs:
     docker:
       - image: python:3.9.1-alpine3.12
     steps:
-      - slack/notify:
-        channel: $SLACK_DEFAULT_CHANEL
-        event: fail
-        template: basic_fail_1
-      - slack/notify:
-        channel: $SLACK_DEFAULT_CHANEL
-        event: pass
-        template: basic_success_1
       - checkout
       - run:
           name: Install dependencies
@@ -775,7 +767,16 @@ jobs:
               aws cloudformation delete-stack --stack-name "udapeople-backend-${OldWorkflowID}"
               aws cloudformation delete-stack --stack-name "udapeople-frontend-${OldWorkflowID}"
             fi
-            
+
+      - slack/notify:
+        channel: $SLACK_DEFAULT_CHANEL
+        event: fail
+        template: basic_fail_1
+      - slack/notify:
+        channel: $SLACK_DEFAULT_CHANEL
+        event: pass
+        template: basic_success_1      
+
 workflows:
 
   default:
