@@ -784,6 +784,8 @@ jobs:
     docker:
       - image: cimg/base:stable
     steps:
+      - python/install:
+          python-version: '3.9'
       - run:
           name: Install dependencies
           command: |
