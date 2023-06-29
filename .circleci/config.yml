@@ -336,14 +336,6 @@ jobs:
             yum install -y tar gzip
       # Checkout code from git
       - checkout
-      # - run:
-      #     name: Ensure InitialStack infrastructure exists
-      #     command: |
-      #         aws cloudformation deploy \
-      #           --template-file .circleci/files/cloudfront.yml \
-      #           --stack-name "udapeople-cloudfront-${CIRCLE_WORKFLOW_ID:0:7}" \
-      #           --parameter-overrides WorkflowID="${CIRCLE_WORKFLOW_ID:0:7}"  \
-      #           --tags project=udapeople
       - run:
           name: Ensure back-end infrastructure exists
           command: |
@@ -352,21 +344,6 @@ jobs:
                 --stack-name "udapeople-backend-${CIRCLE_WORKFLOW_ID:0:7}" \
                 --parameter-overrides ID="${CIRCLE_WORKFLOW_ID:0:7}"  \
                 --tags project=udapeople
-            # aws cloudformation deploy \
-              # --template-file .circleci/files/backend.yml \
-              #--tags project=your-tag \
-              # --stack-name "your back-end stack name with workflow id" \
-              # --parameter-overrides ID="your workflow id"  
-              # exit 1
-      # - run:
-      #     name: Ensure front-end infrastructure exist
-      #     command: |
-      #       aws cloudformation deploy \
-      #         --template-file .circleci/files/frontend.yml \
-      #         #--tags project=your-tag \
-      #         # --stack-name "your front-end stack name with workflow id" \
-      #         # --parameter-overrides ID="your workflow id"  
-      #         exit 1
       - run:
           name: Ensure front-end infrastructure exist
           command: |
@@ -375,17 +352,6 @@ jobs:
                 --stack-name "udapeople-frontend-${CIRCLE_WORKFLOW_ID:0:7}" \
                 --parameter-overrides ID="${CIRCLE_WORKFLOW_ID:0:7}"  \
                 --tags project=udapeople
-      # run:
-      #   name: Fetch Public IP
-      #   command: |
-      #     # Fetch the public IP of the EC2 instance
-      #     export PUBLIC_IP=$(aws ec2 describe-instances \
-      #       --filters "Name=tag:Name,Values=udapeople-backend-${CIRCLE_WORKFLOW_ID:0:7}" \
-      #       --query "Reservations[0].Instances[0].PublicIpAddress" \
-      #       --output text)
-          
-      #     # Write the public IP to the Ansible inventory file
-      #     # echo "backend ansible_host=${PUBLIC_IP}" >> .circleci/ansible/inventory.txt
 
       - run:
           name: Add back-end ip to ansible inventory
@@ -402,14 +368,11 @@ jobs:
             # echo "backend ansible_host=${PUBLIC_IP}" >> .circleci/ansible/inventory.txt
             echo "${PUBLIC_IP}" >> .circleci/ansible/inventory.txt
             cat .circleci/ansible/inventory.txt
-            pwd
 
       - persist_to_workspace:
           root: ~/
-          #root: workspace
           paths:
             - project/.circleci/ansible/inventory.txt
-            # - project/.circleci/*
             
       # Here's where you will add some code to rollback on failure      
       - destroy-environment:
@@ -437,8 +400,6 @@ jobs:
             - "f9:4c:9e:c3:f0:b3:f4:a5:e8:e1:1f:bf:eb:ce:73:9c" # You can get this ID in the section where you registered the SSH Key
       # attach workspace
       - attach_workspace:
-          #at: .
-          # at: /tmp/project/.circleci
           at: ~/
       - run:
           name: Install dependencies
@@ -474,6 +435,14 @@ jobs:
       # Here's where you will add some code to rollback on failure  
       - destroy-environment:
           workflow_id: "${CIRCLE_WORKFLOW_ID:0:7}"
+      - slack/notify:
+          channel: $SLACK_DEFAULT_CHANEL
+          event: fail
+          template: basic_fail_1
+      - slack/notify:
+          channel: $SLACK_DEFAULT_CHANEL
+          event: pass
+          template: basic_success_1
 
   run-migrations:
     docker:
@@ -780,6 +749,13 @@ workflows:
       # - install-node-example:
       #     context:
       #       - slack-secret
+      - deploy-infrastructure:
+          context:
+            - slack-secret
+      - configure-infrastructure:
+          context:
+            - slack-secret
+          requires: [deploy-infrastructure]
       
       # - build-frontend:
       #     context:
@@ -790,35 +766,35 @@ workflows:
       # - send-slack-msg:
       #     context:
       #       - slack-secret
-      - build-frontend:
-          context:
-            - slack-secret
-      - build-backend:
-          context:
-            - slack-secret
-      - test-frontend:
-          context:
-            - slack-secret
-          requires: [build-frontend]
-      - test-backend:
-          context:
-            - slack-secret
-          requires: [build-backend]
-      - scan-backend:
-          context:
-            - slack-secret
-          requires: [build-backend]
-      - scan-frontend:
-          context:
-            - slack-secret
-          requires: [build-frontend]
-      - deploy-infrastructure:
-          context:
-            - slack-secret
-          requires: [test-frontend, test-backend, scan-frontend, scan-backend]
-          filters:
-            branches:
-              only: [master]
+      # - build-frontend:
+      #     context:
+      #       - slack-secret
+      # - build-backend:
+      #     context:
+      #       - slack-secret
+      # - test-frontend:
+      #     context:
+      #       - slack-secret
+      #     requires: [build-frontend]
+      # - test-backend:
+      #     context:
+      #       - slack-secret
+      #     requires: [build-backend]
+      # - scan-backend:
+      #     context:
+      #       - slack-secret
+      #     requires: [build-backend]
+      # - scan-frontend:
+      #     context:
+      #       - slack-secret
+      #     requires: [build-frontend]
+      # - deploy-infrastructure:
+      #     context:
+      #       - slack-secret
+      #     requires: [test-frontend, test-backend, scan-frontend, scan-backend]
+      #     filters:
+      #       branches:
+      #         only: [master]
       # - configure-infrastructure:
       #     requires: [deploy-infrastructure]
       # - run-migrations:
