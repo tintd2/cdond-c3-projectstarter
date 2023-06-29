@@ -191,7 +191,7 @@ jobs:
       - checkout
       # Restore from cache
       - restore_cache:
-          keys: [test-frontend]
+          keys: [frontend-build]
       # Your job code here
       - run:
           name: Test Frontend
@@ -201,8 +201,8 @@ jobs:
             npm install
             npm run test
       - save_cache:
-          paths: [frontend/test]
-          key: frontend-test
+          paths: [frontend/node_modules]
+          key: frontend-build
       - slack/notify:
           channel: $SLACK_DEFAULT_CHANEL
           event: fail
@@ -225,7 +225,7 @@ jobs:
       - checkout
       # Restore from cache
       - restore_cache:
-          keys: [test-backend]
+          keys: [backend-build]
       # Your job code here
       - run:
           name: Test Backend
@@ -235,8 +235,8 @@ jobs:
             npm install
             npm run test
       - save_cache:
-          paths: [backend/test]
-          key: backend-test
+          paths: [backend/node_modules]
+          key: backend-build
       - slack/notify:
           channel: $SLACK_DEFAULT_CHANEL
           event: fail
@@ -259,7 +259,7 @@ jobs:
       - checkout
       # Restore from cache
       - restore_cache:
-          keys: [scan-frontend]
+          keys: [frontend-build]
       # Your job code here
       - run:
           name: Scan Frontend
@@ -277,8 +277,8 @@ jobs:
             npm audit fix --force
             npm audit --audit-level=critical
       - save_cache:
-          paths: [frontend/scan]
-          key: frontend-scan
+          paths: [frontend/node_modules]
+          key: frontend-build
       - slack/notify:
           channel: $SLACK_DEFAULT_CHANEL
           event: fail
@@ -301,7 +301,7 @@ jobs:
       - checkout
       # Restore from cache
       - restore_cache:
-          keys: [scan-backend]
+          keys: [backend-build]
       # Your job code here
       - run:
           name: Scan Backend
@@ -314,8 +314,8 @@ jobs:
             ## If the "npm audit fix" command above could not fix all critical vulnerabilities, try “npm audit fix --force” again
             npm audit --audit-level=critical
       - save_cache:
-          paths: [backend/scan]
-          key: backend-scan
+          paths: [backend/node_modules]
+          key: backend-build
       - slack/notify:
           channel: $SLACK_DEFAULT_CHANEL
           event: fail
