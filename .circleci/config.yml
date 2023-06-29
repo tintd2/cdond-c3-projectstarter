@@ -856,7 +856,7 @@ workflows:
           context:
             - slack-secret
           requires: [smoke-test]
-      - cleanup:
-          context:
-            - slack-secret
-          requires: [cloudfront-update]
+      # - cleanup:
+      #     context:
+      #       - slack-secret
+      #     requires: [cloudfront-update]
