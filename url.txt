@@ -2,8 +2,8 @@ https://github.com/tintd2/cdond-c3-projectstarter
 
 http://ec2-184-72-146-182.compute-1.amazonaws.com:9090/graph
 
-http://udapeople-7f69efa.s3-website-us-east-1.amazonaws.com/#/employees
+http://udapeople-7daa87c.s3-website-us-east-1.amazonaws.com/#/employees
 
-http://44.212.20.168:3030/api/status
+http://54.224.169.124:3030/api/status
 
 http://d353q2duwjmf8q.cloudfront.net/#/employees
