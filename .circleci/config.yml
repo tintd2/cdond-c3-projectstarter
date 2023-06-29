@@ -4,7 +4,7 @@ version: 2.1
 orbs:
   slack: circleci/slack@4.12.5
   aws-cli: circleci/aws-cli@2.0.3
-  node: circleci/node:13.14.0
+  node: circleci/node@5.1.0
 
 commands:
   destroy-environment:
@@ -80,13 +80,13 @@ jobs:
           command: |
             # Your code here
             # sudo apt-get install ca-certificates
-            openssl version -a
-            wget --no-check-certificate https://www.openssl.org/source/old/1.1.0/openssl-1.1.0g.tar.gz
-            tar xzvf openssl-1.1.0g.tar.gz
-            cd openssl-1.1.0g
-            ./config
-            make
-            sudo make install
+            # openssl version -a
+            # wget --no-check-certificate https://www.openssl.org/source/old/1.1.0/openssl-1.1.0g.tar.gz
+            # tar xzvf openssl-1.1.0g.tar.gz
+            # cd openssl-1.1.0g
+            # ./config
+            # make
+            # sudo make install
 
             openssl version -a
       - run:
